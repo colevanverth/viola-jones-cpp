@@ -1,47 +1,44 @@
-#include <opencv2/core.hpp>
-#include <opencv2/videoio.hpp>
-#include <opencv2/highgui.hpp>
-#include <iostream>
-#include <stdio.h>
- 
-using namespace cv;
-using namespace std;
- 
-int main(int, char**)
-{
-    /* Mat frame; */
-    /* //--- INITIALIZE VIDEOCAPTURE */
-    /* VideoCapture cap; */
-    /* // open the default camera using default API */
-    /* // cap.open(0); */
-    /* // OR advance usage: select any API backend */
-    /* int deviceID = 0;             // 0 = open default camera */
-    /* int apiID = cv::CAP_ANY;      // 0 = autodetect default API */
-    /* // open selected camera using selected API */
-    /* cap.open(deviceID, apiID); */
-    /* // check if we succeeded */
-    /* if (!cap.isOpened()) { */
-    /*     cerr << "ERROR! Unable to open camera\n"; */
-    /*     return -1; */
-    /* } */
- 
-    /* //--- GRAB AND WRITE LOOP */
-    /* cout << "Start grabbing" << endl */
-    /*     << "Press any key to terminate" << endl; */
-    /* for (;;) */
-    /* { */
-    /*     // wait for a new frame from camera and store it into 'frame' */
-    /*     cap.read(frame); */
-    /*     // check if we succeeded */
-    /*     if (frame.empty()) { */
-    /*         cerr << "ERROR! blank frame grabbed\n"; */
-    /*         break; */
-    /*     } */
-    /*     // show live and wait for a key with timeout long enough to show images */
-    /*     imshow("Live", frame); */
-    /*     if (waitKey(5) >= 0) */
-    /*         break; */
-    /* } */
-    /* // the camera will be deinitialized automatically in VideoCapture destructor */
-    /* return 0; */
+#include "common.h"
+#include "integral_image.h"
+#include "vjlearner.h"
+
+namespace fs = std::filesystem;
+
+const int TRAINING_LIMIT = 100;
+const int ADABOOST_ITERATIONS = 20;
+const int IMAGE_SIZE = 250; 
+
+int main() {
+    std::string path = std::string(fs::current_path()) + std::string("/rsrc/");
+    std::string facePath = path + std::string("face_edited");
+    std::string nonFacePath = path + std::string("non_face_edited");
+
+    std::vector<IntegralImage> imgs;
+    std::vector<Prediction> targets;
+
+    std::cout << "Loading faces." << std::endl;
+    int counter = 0;
+    for (const auto& entry : fs::directory_iterator(facePath)) {
+        if (counter++ == TRAINING_LIMIT) { break; }
+        cv::Mat img;
+        img = cv::imread(entry.path());
+        IntegralImage iimg(img);
+        imgs.push_back(iimg);
+        targets.push_back(Prediction::FACE);
+    }
+
+    std::cout << "Loading non-faces." << std::endl;
+    counter = 0;
+    for (const auto& entry : fs::directory_iterator(nonFacePath)) {
+        if (counter++ == TRAINING_LIMIT) { break; } 
+        cv::Mat img;
+        img = cv::imread(entry.path());
+        IntegralImage iimg(img);
+        imgs.push_back(iimg);
+        targets.push_back(Prediction::NON_FACE);
+    }
+
+    VJLearner learner(IMAGE_SIZE, ADABOOST_ITERATIONS);
+    learner.train(imgs, targets);
+    std::cout << std::endl << "Final error: " << learner.error(imgs, targets) << std::endl;
 }

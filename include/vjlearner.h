@@ -13,11 +13,15 @@ public:
 
     VJLearner(int imageSize, int boostAmount);
 
-    Prediction predict(const IntegralImage& img); 
+    std::vector<Prediction> predict(const std::vector<IntegralImage>& imgs); 
+
+    float error(const std::vector<IntegralImage>& imgs, const std::vector<Prediction>& targets); 
 
     void train(const std::vector<IntegralImage>& imgs, const std::vector<Prediction>& targets);
 
 private:
+
+    const int WAVELET_STRIDE = 2;
 
     void m_createWavelets();
 

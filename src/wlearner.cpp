@@ -29,6 +29,8 @@ void WLearner::train(const std::vector<IntegralImage>& imgs, const std::vector<f
             bestBestSplitVal = bestSplitVal;
         }
     }
+    std::cout << "Best split val: " << bestBestSplitVal << std::endl;
+    std::cout << "Best error: " << minMinError << std::endl;
     this->m_wavelet = bestWavelet;
     this->m_splitVal = bestBestSplitVal;
 }
