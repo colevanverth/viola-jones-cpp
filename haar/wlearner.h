@@ -1,38 +1,30 @@
 #pragma once
 
-#include "vjlearner.h"
+#include "wavelet.h" 
+#include "common.h"
 
 class WLearner {
-    typedef long waveVal;
 
-    struct Wavelet {
+public:
 
-        Wavelet() = default;
+    WLearner() = delete;
 
-        Wavelet(int mLength, int nLength, int rows, int cols, int mPos, int nPos, int scale, bool isNegative)
-            : rows(rows), cols(cols), mPos(mPos), nPos(nPos) {
-                this->mScaleLength = mLength * scale;
-                this->nScaleLength = nLength * scale;
-        }
+    WLearner(std::vector<Wavelet>& wavelets);
 
-        waveVal getWaveVal(const IntegralImage& img) const;
+    void train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets);
 
-        bool onImage(int imageLength);
+    std::vector<Prediction> predict(const std::vector<IntegralImage>& imgs); 
 
-        int mScaleLength;
+    float error(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets); 
 
-        int nScaleLength;
+private:
 
-        int rows;
+    Wavelet m_wavelet;
 
-        int cols;
+    Wavelet::waveVal m_splitVal;
 
-        int nPos;
+    std::vector<Wavelet>& m_wavelets;
 
-        int mPos;
-        
-        bool isNegative;
-
-    };
+    float m_error(const Wavelet& w, const Wavelet::waveVal,  const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets); 
 
 };

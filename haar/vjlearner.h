@@ -1,99 +1,42 @@
 #pragma once 
 
-#include <opencv2/core.hpp>
-#include <vector>
-#include <iostream>
-#include <optional>
-#include <algorithm>
-#include <limits>
 #include "integral_image.h"
+#include "wavelet.h"
 #include "wlearner.h"
+#include "common.h"
 
 class VJLearner {
 
 public:
 
-    enum Prediction {
-        FACE,
-        NON_FACE
-    };
+    VJLearner() = delete;
 
-    VJLearner() = default;
+    VJLearner(int imageSize, int boostAmount);
 
-    VJLearner(int imageSize);
+    Prediction predict(const IntegralImage& img); 
 
-    bool predict(const IntegralImage& img); 
-
-    void train(const std::vector<IntegralImage>& imgs, const std::vector<bool>& targets, int boostAmount);
-
+    void train(const std::vector<IntegralImage>& imgs, const std::vector<Prediction>& targets);
 
 private:
 
-    /* struct Wavelet; */ 
-
-    /* typedef long waveVal; */
-
-    /* Wavelet m_bestWavelet(const std::vector<IntegralImage>& imgs, std::vector<float>& weights, const std::vector<bool>& targets); */
-
-    /* void m_createWavelets(); */
+    void m_createWavelets();
 
     int m_imageSize;
 
-    /* struct Wavelet { */
+    std::vector<Wavelet> m_wavelets;
 
-    /*     Wavelet() = default; */
+    std::vector<WLearner> m_wLearners;
 
-    /*     Wavelet(int mLength, int nLength, int rows, int cols, int mPos, int nPos, int scale, bool isNegative) */
-    /*         : rows(rows), cols(cols), mPos(mPos), nPos(nPos) { */
-    /*             this->mScaleLength = mLength * scale; */
-    /*             this->nScaleLength = nLength * scale; */
-    /*     } */
+    std::vector<float> m_alphas;
 
-    /*     waveVal getWaveVal(const IntegralImage& img) const; */
+    int m_boostAmount;
 
-    /*     std::vector<Prediction> getPredictions(const std::vector<IntegralImage>& imgs, const std::vector<Prediction>& targets); */
+    const int H1_MLENGTH = 4, H1_NLENGTH = 1, H1_COLS = 2, H1_ROWS = 1;
 
-    /*     bool onImage(int imageLength); */
+    const int H2_MLENGTH = 2, H2_NLENGTH = 2, H2_COLS = 1, H2_ROWS = 2;
 
-    /*     int mScaleLength; */
+    const int H3_MLENGTH = 2, H3_NLENGTH = 1, H3_COLS = 3, H3_ROWS = 1;
 
-    /*     int nScaleLength; */
-
-    /*     int rows; */
-
-    /*     int cols; */
-
-    /*     int nPos; */
-
-    /*     int mPos; */
-        
-    /*     bool isNegative; */
-
-    /* }; */
-
-    /* std::vector<Wavelet> m_wavelets; */
-
-
-    /* std::vector<float> m_waveletAlphas; */
-
-    const int H1_MLENGTH = 4;
-    const int H1_NLENGTH = 1;
-    const int H1_COLS = 2;
-    const int H1_ROWS = 1;
-
-    const int H2_MLENGTH = 2;
-    const int H2_NLENGTH = 2;
-    const int H2_COLS = 1;
-    const int H2_ROWS = 2;
-
-    const int H3_MLENGTH = 2;
-    const int H3_NLENGTH = 1;
-    const int H3_COLS = 3; 
-    const int H3_ROWS = 1;
-
-    const int H4_MLENGTH = 1;
-    const int H4_NLENGTH = 2;
-    const int H4_ROWS = 2;
-    const int H4_COLS = 2;
+    const int H4_MLENGTH = 1, H4_NLENGTH = 2, H4_ROWS = 2, H4_COLS = 2;
 
 };
