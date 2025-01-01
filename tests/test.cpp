@@ -1,7 +1,7 @@
 #define private public
 
-#include "vjlearner.h"
-#include "integral_image.h"
+#include "../include/vjlearner.h"
+#include "../include/integral_image.h"
 
 int main() {
     /* // INTEGRAL IMAGE TEST. */
