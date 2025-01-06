@@ -76,6 +76,7 @@ void VJLearner::train(const std::vector<IntegralImage>& imgs, const std::vector<
 }
 
 void VJLearner::m_createWavelets() {
+    // TODO: Add scale and 90 angle flip.
     for (int m = 0; m < this->m_imageSize; m += this->WAVELET_STRIDE) {
         for (int n = 0; n < this->m_imageSize; n += this->WAVELET_STRIDE) {
             Wavelet w1(H1_MLENGTH, H1_NLENGTH, H1_ROWS, H1_COLS, m, n, 50, false);

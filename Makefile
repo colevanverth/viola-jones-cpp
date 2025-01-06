@@ -1,7 +1,7 @@
 CPP := g++
 CPPVERSION := c++17
 OPENCV := `pkg-config --cflags --libs opencv4`
-FILES := src/vjlearner.cpp src/integral_image.cpp src/wlearner.cpp src/wavelet.cpp
+FILES := src/vjlearner.cpp src/integral_image.cpp src/wlearner.cpp src/wavelet.cpp src/pool.cpp
 I_DIR := include/
 
 train: 
