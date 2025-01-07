@@ -4,8 +4,8 @@
 
 namespace fs = std::filesystem;
 
-const int TRAINING_LIMIT = 100;
-const int ADABOOST_ITERATIONS = 20;
+const int TRAINING_LIMIT = 200;
+const int ADABOOST_ITERATIONS = 25;
 const int IMAGE_SIZE = 250; 
 
 int main() {

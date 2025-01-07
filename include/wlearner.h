@@ -19,6 +19,18 @@ public:
 
 private:
 
+    struct WErrorInfo {
+
+        Wavelet w;
+
+        float error;
+
+        Wavelet::waveVal split;
+
+    };
+
+    const int TRAINING_STRIDE = 20;
+
     Wavelet m_wavelet;
 
     Wavelet::waveVal m_splitVal;
@@ -26,5 +38,7 @@ private:
     std::vector<Wavelet>& m_wavelets;
 
     float m_error(const Wavelet& w, const Wavelet::waveVal,  const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets); 
+
+    WErrorInfo m_bestSplit(const Wavelet& w, const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets);
 
 };

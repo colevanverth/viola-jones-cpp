@@ -4,6 +4,9 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/core.hpp>
 #include <vector>
+#include <mutex>
+#include <functional>
+#include <thread>
 #include <iostream>
 #include <filesystem>
 #include <algorithm>

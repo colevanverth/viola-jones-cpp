@@ -5,34 +5,41 @@ WLearner::WLearner(std::vector<Wavelet>& wavelets)
 
 
 void WLearner::train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets) {
-    float minMinError = std::numeric_limits<float>::infinity();
-    Wavelet bestWavelet;
-    Wavelet::waveVal bestBestSplitVal;
-    
-    for (auto& wavelet : this->m_wavelets) {
-        std::vector<Wavelet::waveVal> waveVals;
-        for (auto& img : imgs) {
-            waveVals.push_back(wavelet.getWaveVal(img));
-        }
-        float minError = std::numeric_limits<float>::infinity();
-        Wavelet::waveVal bestSplitVal;
-        for (auto& wVal : waveVals) {
-            float error = this->m_error(wavelet, wVal, imgs, imgWeights, targets); 
-            if (error < minError) {
-                minError = error;
-                bestSplitVal = wVal;
-            }
-        }
-        if (minError < minMinError) {
-            minMinError = minError;
-            bestWavelet = wavelet;
-            bestBestSplitVal = bestSplitVal;
+    std::vector<WErrorInfo> infos; 
+    for (auto& w : this->m_wavelets) {
+        infos.push_back(this->m_bestSplit(w, imgs, imgWeights, targets)); 
+    }
+
+    float minError = std::numeric_limits<float>::infinity();
+    WErrorInfo bestInfo;
+    for (auto& info : infos) {
+        if (info.error < minError) {
+            minError = info.error;
+            bestInfo = info;
         }
     }
-    std::cout << "Best split val: " << bestBestSplitVal << std::endl;
-    std::cout << "Best error: " << minMinError << std::endl;
-    this->m_wavelet = bestWavelet;
-    this->m_splitVal = bestBestSplitVal;
+    std::cout << "Best split val: " << bestInfo.split << std::endl;
+    std::cout << "Best error: " << bestInfo.error << std::endl;
+    this->m_wavelet = bestInfo.w;
+    this->m_splitVal = bestInfo.split;
+}
+
+WLearner::WErrorInfo WLearner::m_bestSplit(const Wavelet& w, const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets) {
+    std::vector<Wavelet::waveVal> waveVals;
+    for (auto& img : imgs) {
+        waveVals.push_back(w.getWaveVal(img));
+    }
+    float minError = std::numeric_limits<float>::infinity();
+    Wavelet::waveVal bestSplitVal;
+    for (int i = 0; i < waveVals.size(); i += TRAINING_STRIDE) {
+        float error = this->m_error(w, waveVals[i], imgs, imgWeights, targets); 
+        if (error < minError) {
+            minError = error;
+            bestSplitVal = waveVals[i];
+        }
+    }
+    return { w, minError, bestSplitVal };
+    
 }
 
 std::vector<Prediction> WLearner::predict(const std::vector<IntegralImage>& imgs) {
