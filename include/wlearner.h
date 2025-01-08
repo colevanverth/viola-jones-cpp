@@ -2,6 +2,8 @@
 
 #include "wavelet.h" 
 #include "common.h"
+#include "pool.h"
+
 
 class WLearner {
 

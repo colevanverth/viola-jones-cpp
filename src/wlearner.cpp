@@ -5,10 +5,11 @@ WLearner::WLearner(std::vector<Wavelet>& wavelets)
 
 
 void WLearner::train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets) {
-    std::vector<WErrorInfo> infos; 
+    Pool<WErrorInfo> pool;
     for (auto& w : this->m_wavelets) {
-        infos.push_back(this->m_bestSplit(w, imgs, imgWeights, targets)); 
+        pool.queue([&] () { return this->m_bestSplit(w, imgs, imgWeights, targets); }); 
     }
+    std::vector<WErrorInfo> infos = pool.getReturnVals();
 
     float minError = std::numeric_limits<float>::infinity();
     WErrorInfo bestInfo;
