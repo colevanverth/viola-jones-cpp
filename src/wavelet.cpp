@@ -1,5 +1,12 @@
 #include "wavelet.h"
 
+Wavelet Wavelet::transpose() {
+    Wavelet t = *this;
+    std::swap(t.m_rows, t.m_cols);
+    std::swap(t.m_mScaleLength, t.m_nScaleLength);
+    return t;
+}
+
 Wavelet::Wavelet(int mLength, int nLength, int rows, int cols, int mPos, int nPos, int scale, bool isNegative)
     : m_rows(rows), m_cols(cols), m_mPos(mPos), m_nPos(nPos) {
         this->m_mScaleLength = mLength * scale;

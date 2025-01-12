@@ -31,7 +31,7 @@ private:
 
     };
 
-    const int TRAINING_STRIDE = 20;
+    const int TRAINING_STRIDE = 1;
 
     Wavelet m_wavelet;
 

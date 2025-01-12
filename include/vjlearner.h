@@ -21,9 +21,9 @@ public:
 
 private:
 
-    const int WAVELET_STRIDE = 4;
+    const int WAVELET_STRIDE = 2;
 
-    const int WAVELET_BASE = 50; 
+    const std::vector<int> WAVELET_BASES = {5, 10, 20, 50};
 
     void m_createWavelets();
 

@@ -10,5 +10,8 @@ train:
 webcam:
 	$(CPP) -I $(I_DIR) -o build/webcam.out $(OPENCV) src/webcam.cpp $(FILES) --std=$(CPPVERSION)
 
+test:
+	$(CPP) -I $(I_DIR) -o build/test.out $(OPENCV) tests/test.cpp $(FILES) --std=$(CPPVERSION)
+
 clean:
 	rm -rf build/*

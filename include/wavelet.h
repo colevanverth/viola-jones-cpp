@@ -14,6 +14,8 @@ public:
 
     Wavelet(const Wavelet& other, bool isNegative); 
 
+    Wavelet transpose();
+
     waveVal getWaveVal(const IntegralImage& img) const;
 
     bool onImage(int imageLength);

@@ -29,10 +29,6 @@ std::vector<Prediction> VJLearner::predict(const std::vector<IntegralImage>& img
 float VJLearner::error(const std::vector<IntegralImage>& imgs, const std::vector<Prediction>& targets) {
     auto predictions = this->predict(imgs);
     float error = 0;
-    /* std::cout << "Predictions: "; */
-    /* vectorPrint(predictions); */
-    /* std::cout << "Targets: "; */
-    /* vectorPrint(targets); */
     for (int i = 0; i < predictions.size(); i++) {
         if (predictions[i] != targets[i]) {
             error += 1;
@@ -77,17 +73,25 @@ void VJLearner::train(const std::vector<IntegralImage>& imgs, const std::vector<
 }
 
 void VJLearner::m_createWavelets() {
-    // TODO: Add scale and 90 angle flip.
     for (int m = 0; m < this->m_imageSize; m += this->WAVELET_STRIDE) {
         for (int n = 0; n < this->m_imageSize; n += this->WAVELET_STRIDE) {
-            Wavelet w1(H1_MLENGTH, H1_NLENGTH, H1_ROWS, H1_COLS, m, n, WAVELET_BASE, false);
-            Wavelet w2(H2_MLENGTH, H2_NLENGTH, H2_ROWS, H2_COLS, m, n, WAVELET_BASE, false);
-            Wavelet w3(H3_MLENGTH, H3_NLENGTH, H3_ROWS, H3_COLS, m, n, WAVELET_BASE, false);
-            Wavelet w4(H4_MLENGTH, H4_NLENGTH, H4_ROWS, H4_COLS, m, n, WAVELET_BASE, false);
-            if (w1.onImage(this->m_imageSize)) { this->m_wavelets.push_back(w1); this->m_wavelets.push_back(Wavelet(w1, true)); }
-            if (w2.onImage(this->m_imageSize)) { this->m_wavelets.push_back(w2); this->m_wavelets.push_back(Wavelet(w2, true)); }
-            if (w3.onImage(this->m_imageSize)) { this->m_wavelets.push_back(w3); this->m_wavelets.push_back(Wavelet(w3, true)); }
-            if (w4.onImage(this->m_imageSize)) { this->m_wavelets.push_back(w4); this->m_wavelets.push_back(Wavelet(w4, true)); }
+            for (int scale : this->WAVELET_BASES) {
+                std::vector<Wavelet> wavelets;
+                wavelets.push_back({H1_MLENGTH, H1_NLENGTH, H1_ROWS, H1_COLS, m, n, scale, false});
+                wavelets.push_back(wavelets.back().transpose());
+                wavelets.push_back({H2_MLENGTH, H2_NLENGTH, H2_ROWS, H2_COLS, m, n, scale, false});
+                wavelets.push_back(wavelets.back().transpose());
+                wavelets.push_back({H3_MLENGTH, H3_NLENGTH, H3_ROWS, H3_COLS, m, n, scale, false});
+                wavelets.push_back(wavelets.back().transpose());
+                wavelets.push_back({H4_MLENGTH, H4_NLENGTH, H4_ROWS, H4_COLS, m, n, scale, false});
+                wavelets.push_back(wavelets.back().transpose());
+                for (auto& w : wavelets) {
+                    if (w.onImage(this->m_imageSize)) {
+                        this->m_wavelets.push_back(w);
+                        this->m_wavelets.push_back(Wavelet(w, true));
+                    }
+                }
+            }
         }
     }
     std::cout << "Wavelets: " << this->m_wavelets.size() << std::endl;
