@@ -101,7 +101,8 @@ void VJLearner::m_createWavelets() {
 void to_json(json& j, const VJLearner& l) {
     j = json{
         {"m_wLearners", l.m_wLearners},
-        {"m_alphas", l.m_alphas}
+        {"m_alphas", l.m_alphas}, 
+        {"m_boostAmount", l.m_boostAmount}
     };
 }
 
@@ -116,4 +117,5 @@ void from_json(const json& j, std::vector<WLearner>& wLearners) {
 void from_json(const json& j, VJLearner& l) {
     j.at("m_alphas").get_to(l.m_alphas);
     j.at("m_wLearners").get_to(l.m_wLearners);
+    j.at("m_boostAmount").get_to(l.m_boostAmount);
 }
