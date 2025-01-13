@@ -9,7 +9,7 @@ class VJLearner {
 
 public:
 
-    VJLearner() = delete;
+    VJLearner() = default;
 
     VJLearner(int imageSize, int boostAmount);
 
@@ -18,6 +18,10 @@ public:
     float error(const std::vector<IntegralImage>& imgs, const std::vector<Prediction>& targets); 
 
     void train(const std::vector<IntegralImage>& imgs, const std::vector<Prediction>& targets);
+
+    friend void to_json(json& j, const VJLearner& l);
+
+    friend void from_json(const json& j, VJLearner& l);
 
 private:
 

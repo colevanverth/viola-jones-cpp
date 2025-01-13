@@ -1,12 +1,8 @@
 #include "wlearner.h"
 
-WLearner::WLearner(std::vector<Wavelet>& wavelets)
-    : m_wavelets(wavelets) {}
-
-
-void WLearner::train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets) {
+void WLearner::train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets, const std::vector<Wavelet>& wavelets) {
     Pool<WErrorInfo> pool;
-    for (auto& w : this->m_wavelets) {
+    for (auto& w : wavelets) {
         pool.queue([&] () { return this->m_bestSplit(w, imgs, imgWeights, targets); }); 
     }
     std::vector<WErrorInfo> infos = pool.getReturnVals();
@@ -72,3 +68,16 @@ float WLearner::m_error(const Wavelet& w, const Wavelet::waveVal wVal, const std
 float WLearner::error(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets) {
     return this->m_error(this->m_wavelet, this->m_splitVal, imgs, imgWeights, targets);
 }
+
+void to_json(json& j, const WLearner& wL) {
+    j = json{
+        {"m_splitVal", wL.m_splitVal},
+        {"m_wavelet", wL.m_wavelet}
+    };
+}
+
+void from_json(const json& j, WLearner& wL) {
+    j.at("m_splitVal").get_to(wL.m_splitVal);
+    j.at("m_wavelet").get_to(wL.m_wavelet);
+}
+

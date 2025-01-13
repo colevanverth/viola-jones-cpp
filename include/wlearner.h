@@ -9,16 +9,18 @@ class WLearner {
 
 public:
 
-    WLearner() = delete;
+    WLearner() = default;
 
-    WLearner(std::vector<Wavelet>& wavelets);
-
-    void train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets);
+    void train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets, const std::vector<Wavelet>& wavelets);
 
     std::vector<Prediction> predict(const std::vector<IntegralImage>& imgs); 
 
     float error(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets); 
 
+    friend void to_json(json& j, const WLearner& wL);
+
+    friend void from_json(const json& j, WLearner& wL);
+    
 private:
 
     struct WErrorInfo {
@@ -36,8 +38,6 @@ private:
     Wavelet m_wavelet;
 
     Wavelet::waveVal m_splitVal;
-
-    std::vector<Wavelet>& m_wavelets;
 
     float m_error(const Wavelet& w, const Wavelet::waveVal,  const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets); 
 

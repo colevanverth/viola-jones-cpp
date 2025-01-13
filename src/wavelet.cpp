@@ -46,3 +46,25 @@ Wavelet::Wavelet(const Wavelet& other, bool isNegative) {
     *this = other;
     this->m_isNegative = isNegative;
 }
+
+void to_json(json& j, const Wavelet& w) {
+    j = json{
+        {"m_mScaleLength", w.m_mScaleLength},
+        {"m_nScaleLength", w.m_nScaleLength},
+        {"m_rows", w.m_rows},
+        {"m_cols", w.m_cols},
+        {"m_nPos", w.m_nPos},
+        {"m_mPos", w.m_mPos},
+        {"m_isNegative", w.m_isNegative}
+    };
+}
+
+void from_json(const json& j, Wavelet& w) {
+    j.at("m_mScaleLength").get_to(w.m_mScaleLength);
+    j.at("m_nScaleLength").get_to(w.m_nScaleLength);
+    j.at("m_rows").get_to(w.m_rows);
+    j.at("m_cols").get_to(w.m_cols);
+    j.at("m_nPos").get_to(w.m_nPos);
+    j.at("m_mPos").get_to(w.m_mPos);
+    j.at("m_isNegative").get_to(w.m_isNegative);
+}

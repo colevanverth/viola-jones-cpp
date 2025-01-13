@@ -1,6 +1,7 @@
 #pragma once
 
 #include "integral_image.h"
+#include "common.h"
 
 class Wavelet {
 
@@ -19,6 +20,10 @@ public:
     waveVal getWaveVal(const IntegralImage& img) const;
 
     bool onImage(int imageLength);
+
+    friend void to_json(json& j, const Wavelet& w);
+
+    friend void from_json(const json& j, Wavelet& w);
 
 private:
 

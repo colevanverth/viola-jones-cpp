@@ -49,8 +49,8 @@ void VJLearner::train(const std::vector<IntegralImage>& imgs, const std::vector<
 
     for (int i = 0; i < this->m_boostAmount; i++) {
         std::cout << std::endl << "Iteration: " << i << std::endl;
-        WLearner learner(this->m_wavelets);
-        learner.train(imgs, imgWeights, targets);
+        WLearner learner;
+        learner.train(imgs, imgWeights, targets, this->m_wavelets);
         float error = learner.error(imgs, imgWeights, targets); 
         std::cout << "Error: " << error << std::endl;
         this->m_wLearners.push_back(learner);
@@ -95,4 +95,25 @@ void VJLearner::m_createWavelets() {
         }
     }
     std::cout << "Wavelets: " << this->m_wavelets.size() << std::endl;
+}
+
+
+void to_json(json& j, const VJLearner& l) {
+    j = json{
+        {"m_wLearners", l.m_wLearners},
+        {"m_alphas", l.m_alphas}
+    };
+}
+
+void from_json(const json& j, std::vector<WLearner>& wLearners) {
+     for (const auto& item : j) {
+        WLearner learner;
+        item.get_to(learner);  
+        wLearners.push_back(learner);
+    }
+}
+
+void from_json(const json& j, VJLearner& l) {
+    j.at("m_alphas").get_to(l.m_alphas);
+    j.at("m_wLearners").get_to(l.m_wLearners);
 }

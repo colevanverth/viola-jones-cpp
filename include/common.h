@@ -3,6 +3,7 @@
 #include <opencv2/videoio.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
 #include <vector>
 #include <mutex>
 #include <functional>
@@ -13,6 +14,10 @@
 #include <limits>
 #include <cmath>
 #include <numeric>
+#include "json.hpp"
+#include <fstream>
+
+using json = nlohmann::json;
 
 enum Prediction {
     FACE = 1,

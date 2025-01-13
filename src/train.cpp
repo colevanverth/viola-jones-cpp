@@ -4,8 +4,10 @@
 
 namespace fs = std::filesystem;
 
-const int TRAINING_LIMIT = 200;
-const int ADABOOST_ITERATIONS = 25;
+const int TRAINING_LIMIT = 1;
+const int ADABOOST_ITERATIONS = 2;
+/* const int TRAINING_LIMIT = 200; */
+/* const int ADABOOST_ITERATIONS = 25; */
 const int IMAGE_SIZE = 250; 
 
 int main() {
@@ -40,5 +42,8 @@ int main() {
 
     VJLearner learner(IMAGE_SIZE, ADABOOST_ITERATIONS);
     learner.train(imgs, targets);
+    json j = learner;
+    std::ofstream fout("learner.json");
+    fout << std::setw(4) << j << std::endl;
     std::cout << std::endl << "Final error: " << learner.error(imgs, targets) << std::endl;
 }
