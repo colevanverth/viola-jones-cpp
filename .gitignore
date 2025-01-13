@@ -1,3 +1,4 @@
 /rsrc
 .DS_STORE
 *.swp
+/build
