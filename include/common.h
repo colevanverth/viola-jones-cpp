@@ -9,8 +9,10 @@
 #include <functional>
 #include <thread>
 #include <iostream>
+#include <atomic>
 #include <filesystem>
 #include <algorithm>
+#include <semaphore>
 #include <limits>
 #include <cmath>
 #include <numeric>

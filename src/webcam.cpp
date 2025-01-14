@@ -1,8 +1,10 @@
 #include "common.h"
 #include "vjlearner.h"
 #include "integral_image.h"
+#include "pool.h"
  
 const int IMAGE_SIZE = 250;
+const double DOWNSCALE = 0.25;
 const int SUB_WINDOW_SIZE = 100;
 const int BORDER_WIDTH = 3;
 const int RECT_MOVE = 15;
@@ -53,32 +55,48 @@ int main(int, char**) {
     VJLearner learner = j.template get<VJLearner>();
 
 
-    // TODO: Test on a static image?
+    Pool<int> pool;
     for (;;) {
         cap.read(frame);
 
         /* cv::resize(frame, frame, cv::Size(1280, 720)); */
-        cv::resize(frame, frame, cv::Size(), 0.25, 0.25);
         /* faceRectangle(frame, 0, 0); */
         if (frame.empty()) {
             std::cerr << "ERROR! blank frame grabbed\n";
             break;
         }
+        cv::resize(frame, frame, cv::Size(), DOWNSCALE, DOWNSCALE);
+        std::mutex rMutex;
         for (int m = 0; m + IMAGE_SIZE < frame.rows; m += RECT_MOVE) {
             for (int n = 0; n + IMAGE_SIZE < frame.cols; n += RECT_MOVE) {
-                cv::Rect roi(n, m, IMAGE_SIZE, IMAGE_SIZE);
-                cv::Mat slice = frame(roi);
-                std::vector<IntegralImage> datapoint = {IntegralImage(slice)};
-                Prediction p = learner.predict(datapoint)[0];
-                if (p == Prediction::FACE) {
-                    std::cout << "Face at " << m << " " << n << std::endl;
-                    int shift = (IMAGE_SIZE - SUB_WINDOW_SIZE) / 2; 
-                    faceRectangle(frame, m + shift, n + shift);
-                    m = std::min(m + SUB_WINDOW_SIZE, frame.rows - IMAGE_SIZE - 1);
-                    n += SUB_WINDOW_SIZE;
-                }
+                // Update face information if there is one. Need a lock on the
+                // function itself?
+                pool.queue([&rMutex, &learner, &frame,  n, m] () { 
+                    cv::Rect roi(n, m, IMAGE_SIZE, IMAGE_SIZE);
+                    cv::Mat slice = frame(roi);
+                    std::vector<IntegralImage> datapoint = {IntegralImage(slice)};
+                    Prediction p = learner.predict(datapoint)[0];
+                    if (p == Prediction::FACE) {
+                        std::lock_guard<std::mutex> rLock(rMutex);
+                        int shift = (IMAGE_SIZE - SUB_WINDOW_SIZE) / 2; 
+                        faceRectangle(frame, m + shift, n + shift);
+                    }
+                    return -1;
+                }); 
+                /* Prediction p = learner.predict(datapoint)[0]; */
+                /* if (p == Prediction::FACE) { */
+                /*     int shift = (IMAGE_SIZE - SUB_WINDOW_SIZE) / 2; */ 
+                /*     faceRectangle(frame, m + shift, n + shift); */
+                /*     m = std::min(m + SUB_WINDOW_SIZE, frame.rows - IMAGE_SIZE - 1); */
+                /*     n += SUB_WINDOW_SIZE; */
+                /* } */
             }
         }
+        pool.getReturnVals();
+        /* std::vector<Prediction> predictions = pool.getReturnVals(); */
+        /* for (auto& p : predictions) { */
+        /*     if (p == k */
+        /* } */
 
         cv::imshow("Live", frame);
         if (cv::waitKey(5) >= 0)
