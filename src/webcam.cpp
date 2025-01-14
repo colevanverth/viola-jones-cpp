@@ -7,10 +7,14 @@ const int IMAGE_SIZE = 250;
 const double DOWNSCALE = 0.25;
 const int SUB_WINDOW_SIZE = 100;
 const int BORDER_WIDTH = 3;
-const int RECT_MOVE = 15;
+const int RECT_MOVE = 20;
 const cv::Vec3b COLOR = {255, 0, 0};
 
 void faceRectangle(cv::Mat& frame, int mPos, int nPos) {
+    int shift = (IMAGE_SIZE - SUB_WINDOW_SIZE) / 2; 
+    mPos += shift;
+    nPos += shift;
+
     // Left vertical bar.
     for (int m = 0; m < SUB_WINDOW_SIZE; m++) {
         for (int n = 0; n < BORDER_WIDTH; n++) {
@@ -41,9 +45,10 @@ int main(int, char**) {
     // Setup webcam.
     cv::Mat frame;
     cv::VideoCapture cap;
-    int deviceID = 0; // Default camera.
-    int apiID = cv::CAP_ANY; // Default API.
-    cap.open(deviceID, apiID);
+    /* int deviceID = 0; // Default camera. */
+    /* int apiID = cv::CAP_ANY; // Default API. */
+    /* cap.open(deviceID, apiID); */
+    cap.open("./rsrc/test_video.mov");
     if (!cap.isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
         return -1;
@@ -56,50 +61,42 @@ int main(int, char**) {
 
 
     Pool<int> pool;
+    std::vector<cv::Point> facePoints;
+    long long frameCount = 0;
     for (;;) {
+        frameCount++;
         cap.read(frame);
 
-        /* cv::resize(frame, frame, cv::Size(1280, 720)); */
-        /* faceRectangle(frame, 0, 0); */
         if (frame.empty()) {
             std::cerr << "ERROR! blank frame grabbed\n";
             break;
         }
         cv::resize(frame, frame, cv::Size(), DOWNSCALE, DOWNSCALE);
-        std::mutex rMutex;
+        facePoints.clear();
+        std::mutex fMutex;
         for (int m = 0; m + IMAGE_SIZE < frame.rows; m += RECT_MOVE) {
             for (int n = 0; n + IMAGE_SIZE < frame.cols; n += RECT_MOVE) {
-                // Update face information if there is one. Need a lock on the
-                // function itself?
-                pool.queue([&rMutex, &learner, &frame,  n, m] () { 
+                pool.queue([&fMutex, &learner, &frame, &facePoints, n, m] () { 
                     cv::Rect roi(n, m, IMAGE_SIZE, IMAGE_SIZE);
                     cv::Mat slice = frame(roi);
                     std::vector<IntegralImage> datapoint = {IntegralImage(slice)};
                     Prediction p = learner.predict(datapoint)[0];
                     if (p == Prediction::FACE) {
-                        std::lock_guard<std::mutex> rLock(rMutex);
-                        int shift = (IMAGE_SIZE - SUB_WINDOW_SIZE) / 2; 
-                        faceRectangle(frame, m + shift, n + shift);
+                        std::lock_guard<std::mutex> fLock(fMutex);
+                        facePoints.push_back(cv::Point(n, m)); 
                     }
                     return -1;
                 }); 
-                /* Prediction p = learner.predict(datapoint)[0]; */
-                /* if (p == Prediction::FACE) { */
-                /*     int shift = (IMAGE_SIZE - SUB_WINDOW_SIZE) / 2; */ 
-                /*     faceRectangle(frame, m + shift, n + shift); */
-                /*     m = std::min(m + SUB_WINDOW_SIZE, frame.rows - IMAGE_SIZE - 1); */
-                /*     n += SUB_WINDOW_SIZE; */
-                /* } */
             }
         }
-        pool.getReturnVals();
-        /* std::vector<Prediction> predictions = pool.getReturnVals(); */
-        /* for (auto& p : predictions) { */
-        /*     if (p == k */
-        /* } */
+        pool.getReturnVals(); // Clear pool.
+
+        for (const auto& p : facePoints) {
+            faceRectangle(frame, p.y, p.x);
+        }
 
         cv::imshow("Live", frame);
-        if (cv::waitKey(5) >= 0)
+        if (cv::waitKey(1) >= 0)
             break; 
     }
     return 0;

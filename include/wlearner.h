@@ -11,7 +11,7 @@ public:
 
     WLearner() = default;
 
-    void train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets, const std::vector<Wavelet>& wavelets);
+    void train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets, std::vector<Wavelet>& wavelets);
 
     std::vector<Prediction> predict(const std::vector<IntegralImage>& imgs); 
 
@@ -33,11 +33,15 @@ private:
 
     };
 
-    const int TRAINING_STRIDE = 1;
+    const int TRAINING_STRIDE = 1; // Needs to be 1.
 
     Wavelet m_wavelet;
 
     Wavelet::waveVal m_splitVal;
+
+    bool m_prune = true;
+
+    const int PRUNE_AMOUNT = 5000;
 
     float m_error(const Wavelet& w, const Wavelet::waveVal,  const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets); 
 

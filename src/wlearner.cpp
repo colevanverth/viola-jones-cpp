@@ -1,19 +1,31 @@
 #include "wlearner.h"
 
-void WLearner::train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets, const std::vector<Wavelet>& wavelets) {
+void WLearner::train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets, std::vector<Wavelet>& wavelets) {
     Pool<WErrorInfo> pool;
     for (auto& w : wavelets) {
         pool.queue([&] () { return this->m_bestSplit(w, imgs, imgWeights, targets); }); 
     }
     std::vector<WErrorInfo> infos = pool.getReturnVals();
 
-    float minError = std::numeric_limits<float>::infinity();
     WErrorInfo bestInfo;
-    for (auto& info : infos) {
-        if (info.error < minError) {
-            minError = info.error;
-            bestInfo = info;
+    if (!this->m_prune) {
+        bestInfo = *std::min_element(infos.begin(), infos.end(), [](const WErrorInfo& i1, const WErrorInfo& i2) {
+            return i1.error < i2.error;
+        });
+    }
+    else {
+        this->m_prune = false;
+        std::sort(infos.begin(), infos.end(), [](const WErrorInfo& i1, const WErrorInfo& i2) {
+            return i1.error < i2.error;
+        });
+        bestInfo = infos[0];
+        infos.resize(PRUNE_AMOUNT);
+        std::vector<Wavelet> newWavelets;
+        for (auto& i : infos) {
+            newWavelets.push_back(i.w);
         }
+        wavelets = newWavelets;
+
     }
     std::cout << "Best split val: " << bestInfo.split << std::endl;
     std::cout << "Best error: " << bestInfo.error << std::endl;

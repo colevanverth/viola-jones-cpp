@@ -4,12 +4,12 @@
 
 namespace fs = std::filesystem;
 
-const int NON_FACE_LIMIT = 300;
-const int FACE_LIMIT = 100;
-const int ADABOOST_ITERATIONS = 25;
-/* const int NON_FACE_LIMIT = 150; */
-/* const int FACE_LIMIT = 50; */
-/* const int ADABOOST_ITERATIONS = 10; */
+const int NON_FACE_LIMIT = 3000;
+const int FACE_LIMIT = 1000;
+const int ADABOOST_ITERATIONS = 100;
+/* const int NON_FACE_LIMIT = 90; */
+/* const int FACE_LIMIT = 30; */
+/* const int ADABOOST_ITERATIONS = 50; */
 const int IMAGE_SIZE = 250; 
 
 int main() {
