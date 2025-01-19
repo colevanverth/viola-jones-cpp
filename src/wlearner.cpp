@@ -1,19 +1,5 @@
 #include "wlearner.h"
 
-namespace {
-template <typename T>
-std::vector<T> uniform(const std::vector<T> &v, int amount) {
-  std::vector<T> result;
-  size_t step = v.size() / amount;
-  for (size_t i = 0; i < v.size(); i += step) {
-    result.push_back(v[i]);
-    if (result.size() == amount)
-      break;
-  }
-  return result;
-}
-} // namespace
-
 void WLearner::train(const std::vector<IntegralImage> &imgs,
                      const std::vector<float> &imgWeights,
                      const std::vector<Prediction> &targets,

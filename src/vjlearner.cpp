@@ -1,14 +1,5 @@
 #include "vjlearner.h"
 
-namespace {
-template <typename T> void vectorPrint(const std::vector<T> &v) {
-  for (const auto &e : v) {
-    std::cout << e << " ";
-  }
-  std::cout << std::endl;
-}
-} // namespace
-
 std::vector<Prediction>
 VJLearner::predict(const std::vector<IntegralImage> &imgs) {
   std::vector<Prediction> predictions;
