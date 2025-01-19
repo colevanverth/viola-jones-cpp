@@ -58,6 +58,8 @@ private:
             std::unique_lock pLock(this->m_pMutex);
             this->m_pCounter--;
             pLock.unlock();
+            std::cout << "Processed wavelets: " << this->m_returnVals.size() << "\r" ;
+            std::cout.flush();
             this->m_pCondition.notify_one();
         }
     }

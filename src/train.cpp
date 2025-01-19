@@ -4,13 +4,11 @@
 
 namespace fs = std::filesystem;
 
-const int NON_FACE_LIMIT = 3000;
-const int FACE_LIMIT = 1000;
-const int ADABOOST_ITERATIONS = 100;
-/* const int NON_FACE_LIMIT = 90; */
-/* const int FACE_LIMIT = 30; */
-/* const int ADABOOST_ITERATIONS = 50; */
+const int NON_FACE_LIMIT = 5914;
+const int FACE_LIMIT = 5914;
+const int ADABOOST_ITERATIONS = 200;
 const int IMAGE_SIZE = 250; 
+const int PADDING_SIZE = 100;
 
 int main() {
     std::string path = std::string(fs::current_path()) + std::string("/rsrc/");
@@ -22,8 +20,17 @@ int main() {
 
     std::cout << "Loading faces." << std::endl;
     int counter = 0;
+
+    int faceLimit;
+    if (FACE_LIMIT == -1) {
+        faceLimit = std::distance(fs::directory_iterator(facePath), fs::directory_iterator{});
+    }
+    else {
+        faceLimit = FACE_LIMIT;
+    }
+
     for (const auto& entry : fs::directory_iterator(facePath)) {
-        if (counter++ == FACE_LIMIT) { break; }
+        if (counter++ == faceLimit) { break; }
         cv::Mat img;
         img = cv::imread(entry.path());
         IntegralImage iimg(img);
@@ -33,8 +40,16 @@ int main() {
 
     std::cout << "Loading non-faces." << std::endl;
     counter = 0;
+
+    int nonFaceLimit;
+    if (NON_FACE_LIMIT == -1) {
+        nonFaceLimit = std::distance(fs::directory_iterator(facePath), fs::directory_iterator{});
+    }
+    else {
+        nonFaceLimit = NON_FACE_LIMIT;
+    }
     for (const auto& entry : fs::directory_iterator(nonFacePath)) {
-        if (counter++ == NON_FACE_LIMIT) { break; } 
+        if (counter++ == nonFaceLimit) { break; } 
         cv::Mat img;
         img = cv::imread(entry.path());
         IntegralImage iimg(img);
@@ -48,4 +63,5 @@ int main() {
     std::ofstream fout("learner.json");
     fout << std::setw(4) << j << std::endl;
     std::cout << std::endl << "Final error: " << learner.error(imgs, targets) << std::endl;
+    std::cout << std::endl << "Final error (cascade): " << learner.error(imgs, targets) << std::endl;
 }

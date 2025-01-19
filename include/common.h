@@ -6,6 +6,7 @@
 #include <opencv2/imgproc.hpp>
 #include <vector>
 #include <mutex>
+#include <cmath>
 #include <functional>
 #include <thread>
 #include <iostream>

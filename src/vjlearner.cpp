@@ -10,21 +10,26 @@ namespace {
     }
 }
 
-VJLearner::VJLearner(int imageSize, int boostAmount)
-    : m_imageSize(imageSize), m_boostAmount(boostAmount) {}
-
 std::vector<Prediction> VJLearner::predict(const std::vector<IntegralImage>& imgs) {
     std::vector<Prediction> predictions;
     for (const auto& img : imgs) {
         float total = 0;
+        bool fail = false;
         for (int i = 0; i < this->m_boostAmount; i++) {
             total += this->m_alphas[i] * static_cast<float>(this->m_wLearners[i].predict({img})[0]);
+            if (i != 0 && i % CASCADE_RESET == 0 && total <= 0) {
+                fail = true;
+                break;
+            }
         }
-        Prediction p = (total <= 0) ? Prediction::NON_FACE : Prediction::FACE;
+        Prediction p = (fail) ? Prediction::NON_FACE : Prediction::FACE;
         predictions.push_back(p);
     }
     return predictions;
 }
+
+VJLearner::VJLearner(int imageSize, int boostAmount)
+    : m_imageSize(imageSize), m_boostAmount(boostAmount) {}
 
 float VJLearner::error(const std::vector<IntegralImage>& imgs, const std::vector<Prediction>& targets) {
     auto predictions = this->predict(imgs);

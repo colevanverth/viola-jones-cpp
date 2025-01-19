@@ -33,15 +33,18 @@ private:
 
     };
 
-    const int TRAINING_STRIDE = 1; // Needs to be 1.
+    struct WSplitInfo {
+
+        float imgWeight;
+
+        Prediction prediction;
+
+        Wavelet::waveVal waveVal;
+    };
 
     Wavelet m_wavelet;
 
     Wavelet::waveVal m_splitVal;
-
-    bool m_prune = true;
-
-    const int PRUNE_AMOUNT = 5000;
 
     float m_error(const Wavelet& w, const Wavelet::waveVal,  const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets); 
 

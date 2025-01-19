@@ -13,7 +13,7 @@ public:
 
     VJLearner(int imageSize, int boostAmount);
 
-    std::vector<Prediction> predict(const std::vector<IntegralImage>& imgs); 
+    std::vector<Prediction> predict(const std::vector<IntegralImage>& imgs);
 
     float error(const std::vector<IntegralImage>& imgs, const std::vector<Prediction>& targets); 
 
@@ -28,6 +28,8 @@ private:
     const int WAVELET_STRIDE = 2;
 
     const std::vector<int> WAVELET_BASES = {5, 10, 20, 50};
+
+    const int CASCADE_RESET = 15;
 
     void m_createWavelets();
 

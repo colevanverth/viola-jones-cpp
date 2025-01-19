@@ -1,60 +1,20 @@
 {
     "m_alphas": [
-        1.319528579711914,
-        0.9143524765968323,
-        0.6830755472183228,
-        0.8198754787445068,
-        0.6132131218910217,
-        0.8193497657775879,
-        0.6644530892372131,
-        0.7625636458396912,
-        0.7247214913368225,
-        0.6875951290130615,
-        0.7954541444778442,
-        0.64324951171875,
-        0.6530779004096985,
-        0.6278510689735413,
-        0.7044471502304077,
-        0.5134593844413757,
-        0.5727362632751465,
-        0.552605926990509,
-        0.6410579681396484,
-        0.6440796256065369,
-        0.6163539290428162,
-        0.5547772645950317,
-        0.5931391716003418,
-        0.5557244420051575,
-        0.5112121105194092,
-        0.5353999733924866,
-        0.6941213607788086,
-        0.6163574457168579,
-        0.49470239877700806,
-        0.5310316681861877,
-        0.7153058052062988,
-        0.6836337447166443,
-        0.6319586038589478,
-        0.6495393514633179,
-        0.5395362973213196,
-        0.6443609595298767,
-        0.7479442954063416,
-        0.5900928378105164,
-        0.48203369975090027,
-        0.6851800680160522,
-        0.6371362805366516,
-        0.6427022814750671,
-        0.6866780519485474,
-        0.568681538105011,
-        0.7788568139076233,
-        0.5088890194892883,
-        0.5456632375717163,
-        0.43049168586730957,
-        0.5026463866233826,
-        0.6064581274986267
+        0.9469509124755859,
+        0.4878353178501129,
+        0.41319236159324646,
+        0.315665066242218,
+        0.2673036754131317,
+        0.2623108923435211,
+        0.2894192337989807,
+        0.24402324855327606,
+        0.23988080024719238,
+        0.24225610494613647
     ],
-    "m_boostAmount": 50,
+    "m_boostAmount": 10,
     "m_wLearners": [
         {
-            "m_splitVal": -942,
+            "m_splitVal": -1242,
             "m_wavelet": {
                 "m_cols": 3,
                 "m_isNegative": true,
@@ -66,589 +26,109 @@
             }
         },
         {
-            "m_splitVal": 162,
+            "m_splitVal": -4109,
             "m_wavelet": {
-                "m_cols": 1,
+                "m_cols": 3,
                 "m_isNegative": true,
-                "m_mPos": 0,
-                "m_mScaleLength": 5,
-                "m_nPos": 78,
-                "m_nScaleLength": 20,
-                "m_rows": 2
+                "m_mPos": 240,
+                "m_mScaleLength": 10,
+                "m_nPos": 0,
+                "m_nScaleLength": 5,
+                "m_rows": 1
             }
         },
         {
-            "m_splitVal": -49847,
+            "m_splitVal": 513,
             "m_wavelet": {
-                "m_cols": 1,
+                "m_cols": 2,
                 "m_isNegative": true,
-                "m_mPos": 4,
+                "m_mPos": 116,
                 "m_mScaleLength": 20,
-                "m_nPos": 0,
-                "m_nScaleLength": 40,
-                "m_rows": 3
-            }
-        },
-        {
-            "m_splitVal": 11472,
-            "m_wavelet": {
-                "m_cols": 2,
-                "m_isNegative": true,
-                "m_mPos": 4,
-                "m_mScaleLength": 40,
-                "m_nPos": 6,
-                "m_nScaleLength": 40,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 5496,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 10,
-                "m_nPos": 6,
-                "m_nScaleLength": 40,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -2785,
-            "m_wavelet": {
-                "m_cols": 3,
-                "m_isNegative": true,
-                "m_mPos": 238,
-                "m_mScaleLength": 10,
-                "m_nPos": 0,
+                "m_nPos": 240,
                 "m_nScaleLength": 5,
                 "m_rows": 1
             }
         },
         {
-            "m_splitVal": 1614,
-            "m_wavelet": {
-                "m_cols": 2,
-                "m_isNegative": true,
-                "m_mPos": 68,
-                "m_mScaleLength": 80,
-                "m_nPos": 182,
-                "m_nScaleLength": 20,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 1001,
+            "m_splitVal": -14486,
             "m_wavelet": {
                 "m_cols": 1,
                 "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 10,
-                "m_nPos": 40,
-                "m_nScaleLength": 10,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -1248,
-            "m_wavelet": {
-                "m_cols": 3,
-                "m_isNegative": true,
-                "m_mPos": 222,
-                "m_mScaleLength": 10,
-                "m_nPos": 0,
-                "m_nScaleLength": 5,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": -216,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 5,
-                "m_nPos": 84,
-                "m_nScaleLength": 20,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -35261,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 16,
+                "m_mPos": 94,
                 "m_mScaleLength": 20,
-                "m_nPos": 0,
-                "m_nScaleLength": 40,
-                "m_rows": 3
-            }
-        },
-        {
-            "m_splitVal": 186,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 0,
-                "m_mScaleLength": 10,
-                "m_nPos": 80,
-                "m_nScaleLength": 10,
+                "m_nPos": 170,
+                "m_nScaleLength": 80,
                 "m_rows": 2
             }
         },
         {
-            "m_splitVal": 1614,
-            "m_wavelet": {
-                "m_cols": 2,
-                "m_isNegative": true,
-                "m_mPos": 68,
-                "m_mScaleLength": 80,
-                "m_nPos": 182,
-                "m_nScaleLength": 20,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 5513,
+            "m_splitVal": 0,
             "m_wavelet": {
                 "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 10,
-                "m_nPos": 8,
-                "m_nScaleLength": 40,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -4750,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 20,
+                "m_isNegative": false,
+                "m_mPos": 240,
                 "m_mScaleLength": 5,
-                "m_nPos": 10,
-                "m_nScaleLength": 10,
-                "m_rows": 3
+                "m_nPos": 94,
+                "m_nScaleLength": 20,
+                "m_rows": 2
             }
         },
         {
-            "m_splitVal": 5294,
+            "m_splitVal": -435,
+            "m_wavelet": {
+                "m_cols": 3,
+                "m_isNegative": true,
+                "m_mPos": 240,
+                "m_mScaleLength": 10,
+                "m_nPos": 0,
+                "m_nScaleLength": 5,
+                "m_rows": 1
+            }
+        },
+        {
+            "m_splitVal": -329311,
             "m_wavelet": {
                 "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 0,
+                "m_isNegative": false,
+                "m_mPos": 18,
+                "m_mScaleLength": 50,
+                "m_nPos": 42,
+                "m_nScaleLength": 200,
+                "m_rows": 2
+            }
+        },
+        {
+            "m_splitVal": 150551,
+            "m_wavelet": {
+                "m_cols": 2,
+                "m_isNegative": false,
+                "m_mPos": 42,
+                "m_mScaleLength": 200,
+                "m_nPos": 144,
+                "m_nScaleLength": 50,
+                "m_rows": 1
+            }
+        },
+        {
+            "m_splitVal": -868,
+            "m_wavelet": {
+                "m_cols": 2,
+                "m_isNegative": false,
+                "m_mPos": 92,
                 "m_mScaleLength": 20,
-                "m_nPos": 34,
-                "m_nScaleLength": 20,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -1675,
-            "m_wavelet": {
-                "m_cols": 3,
-                "m_isNegative": true,
-                "m_mPos": 232,
-                "m_mScaleLength": 10,
-                "m_nPos": 0,
+                "m_nPos": 126,
                 "m_nScaleLength": 5,
                 "m_rows": 1
             }
         },
         {
-            "m_splitVal": 1614,
-            "m_wavelet": {
-                "m_cols": 2,
-                "m_isNegative": true,
-                "m_mPos": 68,
-                "m_mScaleLength": 80,
-                "m_nPos": 182,
-                "m_nScaleLength": 20,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 5788,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 10,
-                "m_nPos": 20,
-                "m_nScaleLength": 40,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -1248,
-            "m_wavelet": {
-                "m_cols": 3,
-                "m_isNegative": true,
-                "m_mPos": 222,
-                "m_mScaleLength": 10,
-                "m_nPos": 0,
-                "m_nScaleLength": 5,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": -79,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 0,
-                "m_mScaleLength": 5,
-                "m_nPos": 78,
-                "m_nScaleLength": 20,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -3901,
-            "m_wavelet": {
-                "m_cols": 3,
-                "m_isNegative": true,
-                "m_mPos": 0,
-                "m_mScaleLength": 10,
-                "m_nPos": 210,
-                "m_nScaleLength": 5,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 2373,
-            "m_wavelet": {
-                "m_cols": 2,
-                "m_isNegative": true,
-                "m_mPos": 14,
-                "m_mScaleLength": 20,
-                "m_nPos": 0,
-                "m_nScaleLength": 20,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 10485,
-            "m_wavelet": {
-                "m_cols": 2,
-                "m_isNegative": true,
-                "m_mPos": 32,
-                "m_mScaleLength": 40,
-                "m_nPos": 0,
-                "m_nScaleLength": 40,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": -909,
-            "m_wavelet": {
-                "m_cols": 3,
-                "m_isNegative": true,
-                "m_mPos": 230,
-                "m_mScaleLength": 10,
-                "m_nPos": 0,
-                "m_nScaleLength": 5,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 5496,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 10,
-                "m_nPos": 6,
-                "m_nScaleLength": 40,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -79,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 0,
-                "m_mScaleLength": 5,
-                "m_nPos": 78,
-                "m_nScaleLength": 20,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -909,
-            "m_wavelet": {
-                "m_cols": 3,
-                "m_isNegative": true,
-                "m_mPos": 230,
-                "m_mScaleLength": 10,
-                "m_nPos": 0,
-                "m_nScaleLength": 5,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": -926,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 20,
-                "m_nPos": 10,
-                "m_nScaleLength": 20,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": 902,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 0,
-                "m_mScaleLength": 5,
-                "m_nPos": 78,
-                "m_nScaleLength": 20,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": 1614,
-            "m_wavelet": {
-                "m_cols": 2,
-                "m_isNegative": true,
-                "m_mPos": 68,
-                "m_mScaleLength": 80,
-                "m_nPos": 182,
-                "m_nScaleLength": 20,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 5788,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 10,
-                "m_nPos": 20,
-                "m_nScaleLength": 40,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -121229,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 20,
-                "m_mScaleLength": 20,
-                "m_nPos": 0,
-                "m_nScaleLength": 40,
-                "m_rows": 3
-            }
-        },
-        {
-            "m_splitVal": -1976,
-            "m_wavelet": {
-                "m_cols": 3,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 10,
-                "m_nPos": 0,
-                "m_nScaleLength": 5,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": -1248,
-            "m_wavelet": {
-                "m_cols": 3,
-                "m_isNegative": true,
-                "m_mPos": 222,
-                "m_mScaleLength": 10,
-                "m_nPos": 0,
-                "m_nScaleLength": 5,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 1614,
-            "m_wavelet": {
-                "m_cols": 2,
-                "m_isNegative": true,
-                "m_mPos": 68,
-                "m_mScaleLength": 80,
-                "m_nPos": 182,
-                "m_nScaleLength": 20,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 186,
+            "m_splitVal": 1342,
             "m_wavelet": {
                 "m_cols": 1,
                 "m_isNegative": true,
                 "m_mPos": 0,
                 "m_mScaleLength": 10,
-                "m_nPos": 80,
-                "m_nScaleLength": 10,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -1762,
-            "m_wavelet": {
-                "m_cols": 3,
-                "m_isNegative": true,
-                "m_mPos": 22,
-                "m_mScaleLength": 10,
-                "m_nPos": 2,
-                "m_nScaleLength": 5,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": -20767,
-            "m_wavelet": {
-                "m_cols": 2,
-                "m_isNegative": true,
-                "m_mPos": 0,
-                "m_mScaleLength": 40,
-                "m_nPos": 10,
-                "m_nScaleLength": 40,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 5688,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 10,
-                "m_nPos": 16,
-                "m_nScaleLength": 40,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -1248,
-            "m_wavelet": {
-                "m_cols": 3,
-                "m_isNegative": true,
-                "m_mPos": 222,
-                "m_mScaleLength": 10,
-                "m_nPos": 0,
-                "m_nScaleLength": 5,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 1614,
-            "m_wavelet": {
-                "m_cols": 2,
-                "m_isNegative": true,
-                "m_mPos": 68,
-                "m_mScaleLength": 80,
-                "m_nPos": 182,
-                "m_nScaleLength": 20,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 1563,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 10,
-                "m_nPos": 32,
-                "m_nScaleLength": 10,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -262,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 5,
-                "m_nPos": 86,
-                "m_nScaleLength": 20,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": 902,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 0,
-                "m_mScaleLength": 5,
-                "m_nPos": 78,
-                "m_nScaleLength": 20,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": -926,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 20,
-                "m_nPos": 10,
-                "m_nScaleLength": 20,
-                "m_rows": 2
-            }
-        },
-        {
-            "m_splitVal": 11437,
-            "m_wavelet": {
-                "m_cols": 2,
-                "m_isNegative": true,
-                "m_mPos": 82,
-                "m_mScaleLength": 80,
-                "m_nPos": 182,
-                "m_nScaleLength": 20,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 2373,
-            "m_wavelet": {
-                "m_cols": 2,
-                "m_isNegative": true,
-                "m_mPos": 14,
-                "m_mScaleLength": 20,
-                "m_nPos": 0,
-                "m_nScaleLength": 20,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": -2765,
-            "m_wavelet": {
-                "m_cols": 3,
-                "m_isNegative": true,
-                "m_mPos": 220,
-                "m_mScaleLength": 10,
-                "m_nPos": 0,
-                "m_nScaleLength": 5,
-                "m_rows": 1
-            }
-        },
-        {
-            "m_splitVal": 5243,
-            "m_wavelet": {
-                "m_cols": 1,
-                "m_isNegative": true,
-                "m_mPos": 2,
-                "m_mScaleLength": 10,
-                "m_nPos": 24,
+                "m_nPos": 4,
                 "m_nScaleLength": 40,
                 "m_rows": 2
             }

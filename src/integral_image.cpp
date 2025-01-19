@@ -1,4 +1,5 @@
 #include "integral_image.h"
+#include <iostream>
 
 IntegralImage::IntegralImage(const cv::Mat& img)
     : m_rows(img.rows), m_cols(img.cols) {

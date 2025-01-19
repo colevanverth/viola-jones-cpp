@@ -1,5 +1,18 @@
 #include "wlearner.h"
 
+namespace {
+    template <typename T>
+    std::vector<T> uniform(const std::vector<T>& v, int amount) {
+        std::vector<T> result;
+        size_t step = v.size() / amount;
+        for (size_t i = 0; i < v.size(); i += step) {
+            result.push_back(v[i]);
+            if (result.size() == amount) break;
+        }
+        return result;
+    }
+}
+
 void WLearner::train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets, std::vector<Wavelet>& wavelets) {
     Pool<WErrorInfo> pool;
     for (auto& w : wavelets) {
@@ -8,47 +21,56 @@ void WLearner::train(const std::vector<IntegralImage>& imgs, const std::vector<f
     std::vector<WErrorInfo> infos = pool.getReturnVals();
 
     WErrorInfo bestInfo;
-    if (!this->m_prune) {
-        bestInfo = *std::min_element(infos.begin(), infos.end(), [](const WErrorInfo& i1, const WErrorInfo& i2) {
-            return i1.error < i2.error;
-        });
-    }
-    else {
-        this->m_prune = false;
-        std::sort(infos.begin(), infos.end(), [](const WErrorInfo& i1, const WErrorInfo& i2) {
-            return i1.error < i2.error;
-        });
-        bestInfo = infos[0];
-        infos.resize(PRUNE_AMOUNT);
-        std::vector<Wavelet> newWavelets;
-        for (auto& i : infos) {
-            newWavelets.push_back(i.w);
-        }
-        wavelets = newWavelets;
-
-    }
-    std::cout << "Best split val: " << bestInfo.split << std::endl;
-    std::cout << "Best error: " << bestInfo.error << std::endl;
+    bestInfo = *std::min_element(infos.begin(), infos.end(), [](const WErrorInfo& i1, const WErrorInfo& i2) {
+        return i1.error < i2.error;
+    });
+    std::cout << "Split: " << bestInfo.split << std::endl;
     this->m_wavelet = bestInfo.w;
     this->m_splitVal = bestInfo.split;
 }
 
 WLearner::WErrorInfo WLearner::m_bestSplit(const Wavelet& w, const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets) {
-    std::vector<Wavelet::waveVal> waveVals;
-    for (auto& img : imgs) {
-        waveVals.push_back(w.getWaveVal(img));
+    std::vector<WSplitInfo> splitInfos;
+    for (int i = 0; i < imgs.size(); i++) {
+        splitInfos.push_back({imgWeights[i], targets[i], w.getWaveVal(imgs[i])});
     }
-    float minError = std::numeric_limits<float>::infinity();
-    Wavelet::waveVal bestSplitVal;
-    for (int i = 0; i < waveVals.size(); i += TRAINING_STRIDE) {
-        float error = this->m_error(w, waveVals[i], imgs, imgWeights, targets); 
-        if (error < minError) {
-            minError = error;
-            bestSplitVal = waveVals[i];
+    std::sort(splitInfos.begin(), splitInfos.end(), [](const WSplitInfo& w1, const WSplitInfo& w2) {
+            return w1.waveVal < w2.waveVal;
+    });
+
+    std::vector<float> faceError, nonFaceError;
+    if (splitInfos[0].prediction == Prediction::FACE) {
+        faceError.push_back(splitInfos[0].imgWeight);
+    }
+    else {
+        faceError.push_back(0);
+    }
+    if (splitInfos.back().prediction == Prediction::NON_FACE) {
+        nonFaceError.push_back(splitInfos.back().imgWeight);
+    }
+    else {
+        nonFaceError.push_back(0);
+    }
+
+    for (int i = 1; i < splitInfos.size(); i++) {
+        faceError.push_back(faceError.back() + ( (splitInfos[i].prediction == Prediction::FACE) ? splitInfos[i].imgWeight : 0 ));
+    }
+    for (int i = splitInfos.size() - 1; i >= 1; i--) {
+        nonFaceError.push_back(nonFaceError.back() + ( (splitInfos[i].prediction == Prediction::NON_FACE) ? splitInfos[i].imgWeight : 0));
+    }
+    std::reverse(nonFaceError.begin(), nonFaceError.end());
+
+    float mError = std::numeric_limits<float>::infinity();
+    Wavelet::waveVal bSplit;
+    for (int i = 0; i < splitInfos.size(); i++) {
+        float error = faceError[i] + nonFaceError[i];
+        if (error < mError) {
+            bSplit = splitInfos[i].waveVal;
+            mError = error;
         }
     }
-    return { w, minError, bestSplitVal };
-    
+
+    return { w, mError, bSplit};
 }
 
 std::vector<Prediction> WLearner::predict(const std::vector<IntegralImage>& imgs) {
