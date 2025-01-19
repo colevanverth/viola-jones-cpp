@@ -1,44 +1,42 @@
 #pragma once
 
-#include "integral_image.h"
 #include "common.h"
+#include "integral_image.h"
 
 class Wavelet {
 
 public:
+  typedef long waveVal;
 
-    typedef long waveVal;
+  Wavelet() = default;
 
-    Wavelet() = default;
+  Wavelet(int mLength, int nLength, int rows, int cols, int mPos, int nPos,
+          int scale, bool isNegative);
 
-    Wavelet(int mLength, int nLength, int rows, int cols, int mPos, int nPos, int scale, bool isNegative);
+  Wavelet(const Wavelet &other, bool isNegative);
 
-    Wavelet(const Wavelet& other, bool isNegative); 
+  Wavelet transpose();
 
-    Wavelet transpose();
+  waveVal getWaveVal(const IntegralImage &img) const;
 
-    waveVal getWaveVal(const IntegralImage& img) const;
+  bool onImage(int imageLength);
 
-    bool onImage(int imageLength);
+  friend void to_json(json &j, const Wavelet &w);
 
-    friend void to_json(json& j, const Wavelet& w);
-
-    friend void from_json(const json& j, Wavelet& w);
+  friend void from_json(const json &j, Wavelet &w);
 
 private:
+  int m_mScaleLength;
 
-    int m_mScaleLength;
+  int m_nScaleLength;
 
-    int m_nScaleLength;
+  int m_rows;
 
-    int m_rows;
+  int m_cols;
 
-    int m_cols;
+  int m_nPos;
 
-    int m_nPos;
+  int m_mPos;
 
-    int m_mPos;
-    
-    bool m_isNegative;
-
+  bool m_isNegative;
 };

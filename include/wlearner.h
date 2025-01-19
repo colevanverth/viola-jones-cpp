@@ -1,53 +1,59 @@
 #pragma once
 
-#include "wavelet.h" 
 #include "common.h"
 #include "pool.h"
-
+#include "wavelet.h"
 
 class WLearner {
 
 public:
+  WLearner() = default;
 
-    WLearner() = default;
+  void train(const std::vector<IntegralImage> &imgs,
+             const std::vector<float> &imgWeights,
+             const std::vector<Prediction> &targets,
+             std::vector<Wavelet> &wavelets);
 
-    void train(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets, std::vector<Wavelet>& wavelets);
+  std::vector<Prediction> predict(const std::vector<IntegralImage> &imgs);
 
-    std::vector<Prediction> predict(const std::vector<IntegralImage>& imgs); 
+  float error(const std::vector<IntegralImage> &imgs,
+              const std::vector<float> &imgWeights,
+              const std::vector<Prediction> &targets);
 
-    float error(const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets); 
+  friend void to_json(json &j, const WLearner &wL);
 
-    friend void to_json(json& j, const WLearner& wL);
+  friend void from_json(const json &j, WLearner &wL);
 
-    friend void from_json(const json& j, WLearner& wL);
-    
 private:
+  struct WErrorInfo {
 
-    struct WErrorInfo {
+    Wavelet w;
 
-        Wavelet w;
+    float error;
 
-        float error;
+    Wavelet::waveVal split;
+  };
 
-        Wavelet::waveVal split;
+  struct WSplitInfo {
 
-    };
+    float imgWeight;
 
-    struct WSplitInfo {
+    Prediction prediction;
 
-        float imgWeight;
+    Wavelet::waveVal waveVal;
+  };
 
-        Prediction prediction;
+  Wavelet m_wavelet;
 
-        Wavelet::waveVal waveVal;
-    };
+  Wavelet::waveVal m_splitVal;
 
-    Wavelet m_wavelet;
+  float m_error(const Wavelet &w, const Wavelet::waveVal,
+                const std::vector<IntegralImage> &imgs,
+                const std::vector<float> &imgWeights,
+                const std::vector<Prediction> &targets);
 
-    Wavelet::waveVal m_splitVal;
-
-    float m_error(const Wavelet& w, const Wavelet::waveVal,  const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets); 
-
-    WErrorInfo m_bestSplit(const Wavelet& w, const std::vector<IntegralImage>& imgs, const std::vector<float>& imgWeights, const std::vector<Prediction>& targets);
-
+  WErrorInfo m_bestSplit(const Wavelet &w,
+                         const std::vector<IntegralImage> &imgs,
+                         const std::vector<float> &imgWeights,
+                         const std::vector<Prediction> &targets);
 };
