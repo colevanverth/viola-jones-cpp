@@ -28,8 +28,6 @@ void queuePool(Pool<int> &pool, VJLearner &learner, std::mutex &fMutex,
 
 std::vector<cv::Point> averages(std::vector<cv::Point> &p);
 
-cv::Mat padded(const cv::Mat &frame);
-
 int main() {
   // Setup webcam.
   cv::Mat frame;
@@ -77,7 +75,7 @@ int main() {
     for (const auto &p : renderFaces) {
       faceRectangle(frame, p.y, p.x);
     }
-    cv::imshow("Live", padded(frame));
+    cv::imshow("Live", frame);
     if (cv::waitKey(1) >= 0)
       break;
   }
@@ -125,15 +123,6 @@ std::vector<cv::Point> averages(std::vector<cv::Point> &p) {
     averages.push_back(average);
   }
   return averages;
-}
-
-cv::Mat padded(const cv::Mat &frame) {
-  cv::Mat paddedFrame =
-      cv::Mat(frame.rows + IMAGE_SIZE, frame.cols + IMAGE_SIZE, frame.type(),
-              PADDING_COLOR);
-  cv::Rect paddedRoi(IMAGE_SIZE / 2, IMAGE_SIZE / 2, frame.cols, frame.rows);
-  frame.copyTo(paddedFrame(paddedRoi));
-  return paddedFrame;
 }
 
 void faceRectangle(cv::Mat &frame, int mPos, int nPos) {
