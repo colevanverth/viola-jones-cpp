@@ -14,7 +14,7 @@ I translated the method proposed by Viola and Jones¹ to detect faces over an im
 * Real time visualization of face prediction via webcam with frame skipping and AdaBoost cascade heuristics
 
 ## Dependencies
-* `pkg-config`
+* Pkg-Config
 * OpenCV for C++
 * GNU C++ compiler with C++17 support
 * CMake
