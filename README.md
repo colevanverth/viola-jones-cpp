@@ -20,9 +20,9 @@ I translated the method proposed by Viola and Jones¹ to detect faces over an im
 * CMake
 
 ## Program use
-* Webcam view: build and run the live webcam view with `make webcam && ./build/webcam.out`.
-* Training: build and run the learner trainer with `make && ./build/train.out`. The trainer expects 250px by 250px JPEG images to be stored in `rsrc/face_edited` and `rsrc/non_face_edited`.
-* **Note**: both programs have only been tested on macOS Sequoia 15.0. 
+* Webcam view: build and run the live webcam view with `make webcam && ./build/webcam.out`
+* Training: build and run the learner trainer with `make && ./build/train.out`; the trainer expects 250px by 250px JPEG images to be stored in `rsrc/face_edited` and `rsrc/non_face_edited`
+* **Note**: both programs have only been tested on macOS Sequoia 15.0
 
 ## Citations
 1. Viola, Paul, and Michael Jones. "Rapid object detection using a boosted cascade of simple features." Proceedings of the 2001 IEEE computer society conference on computer vision and pattern recognition. CVPR 2001. Vol. 1. Ieee, 2001.
