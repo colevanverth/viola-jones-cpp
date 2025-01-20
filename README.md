@@ -1,4 +1,4 @@
-# Viola-Jones Face Identification
+# Viola-Jones Face Detection
 
 ![Face identification square superimposed over webcam view of Cole Van Verth.](webcam.png)
 
