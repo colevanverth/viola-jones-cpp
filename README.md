@@ -10,7 +10,7 @@ I translated the method proposed by Viola and Jones¹ to detect faces over an im
 * Integral image generator
 * Haar-like wavelet features easily configurable with OOP (600,000+ by default)
 * Serializable learner that trains in time linear to input images
-* Custom thread pool that enabled 10,000 images to be trained in less than 24 hours on a M4 MacBook Pro
+* Custom thread pool that enabled training over 10,000 250px by 250px images in 24 hours on a M4 MacBook Pro
 * Real time visualization of face prediction via webcam with frame skipping and AdaBoost cascade heuristics
 
 ## Dependencies
